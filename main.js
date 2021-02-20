@@ -79,9 +79,3 @@ const resetGame = (arr) => {
     }
   });
 };
-
-function cagar() {
-  return "cagar";
-}
-
-console.log(cagar);
