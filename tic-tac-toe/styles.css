@@ -1,0 +1,39 @@
+.game-board {
+  display: grid;
+  grid-template-rows: 130px 130px 130px;
+  grid-template-columns: 130px 130px 130px;
+  justify-content: center;
+}
+
+.game-board div {
+  border-bottom: 1px solid;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-board div {
+  border-left: 1px solid;
+  display: flex;
+  cursor: pointer;
+}
+
+.game-board div:nth-child(1) {
+  border-left: none;
+}
+
+.game-board div:nth-child(4) {
+  border-left: none;
+}
+
+.game-board div:nth-child(7) {
+  border-bottom: none;
+  border-left: none;
+}
+
+.game-board div:nth-child(8) {
+  border-bottom: none;
+}
+
+.game-board div:nth-child(9) {
+  border-bottom: none;
+}
