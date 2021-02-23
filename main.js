@@ -1,12 +1,11 @@
 const gameBoard = document.getElementById("game-board");
 const currentPlayerMs = document.getElementById("current-player-ms");
 
-const game = ["", "", "", "", "", "", "", "", ""];
 const gameHistory = [];
 
 let currentPlayer = "O";
 
-currentPlayerMs.innerHTML = `Current Player: X`;
+currentPlayerMs.innerHTML = "Current Player: X";
 
 const winningConditions = [
   [0, 1, 2],
@@ -20,8 +19,8 @@ const winningConditions = [
 ];
 
 const startGame = () => {
-  game.forEach(() => {
-    const cell = document.createElement("div");
+  for (let index = 0; index < 9; index++) {
+    const cell = document.createElement("span");
 
     cell.addEventListener("click", () => {
       if (cell.innerHTML) return;
@@ -29,7 +28,7 @@ const startGame = () => {
       cell.innerHTML =
         currentPlayer === "X" ? (currentPlayer = "O") : (currentPlayer = "X");
       cell.setAttribute("class", currentPlayer);
-      const cellElements = gameBoard.querySelectorAll("div");
+      const cellElements = gameBoard.querySelectorAll("span");
       const winner = checkWinner(cellElements, currentPlayer);
 
       if (isDraw(cell.innerHTML) && !winner) {
@@ -48,7 +47,7 @@ const startGame = () => {
     });
 
     gameBoard.append(cell);
-  });
+  }
 };
 
 startGame();

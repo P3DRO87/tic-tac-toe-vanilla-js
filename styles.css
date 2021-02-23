@@ -12,6 +12,7 @@
 }
 
 .game-board div {
+  font-size: 45px;
   border-left: 1px solid;
   display: flex;
   cursor: pointer;
