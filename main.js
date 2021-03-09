@@ -52,13 +52,10 @@ const startGame = () => {
 
 startGame();
 
-const checkWinner = (arr, currentClass) => {
-  return winningConditions.some((combi) => {
-    return combi.every((index) => {
-      return arr[index].classList.contains(currentClass);
-    });
-  });
-};
+const checkWinner = (arr, currentClass) =>
+  winningConditions.some((combi) =>
+    combi.every((index) => arr[index].classList.contains(currentClass))
+  );
 
 const isDraw = (item) => {
   gameHistory.push(item);
