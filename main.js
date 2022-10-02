@@ -1,77 +1,62 @@
-const gameBoard = document.getElementById("game-board");
-const currentPlayerMs = document.getElementById("current-player-ms");
+const $gameBoard = document.getElementById("game-board");
+const $currentPlayerMs = document.getElementById("current-player-ms");
 
-const gameHistory = [];
+const winningConditions = [
+   [0, 1, 2],
+   [3, 4, 5],
+   [6, 7, 8],
+   [0, 3, 6],
+   [1, 4, 7],
+   [2, 5, 8],
+   [0, 4, 8],
+   [2, 4, 6],
+];
 
 let currentPlayer = "O";
 
-currentPlayerMs.innerHTML = "Current Player: X";
+document.addEventListener("DOMContentLoaded", () => main());
 
-const winningConditions = [
-  [0, 1, 2],
-  [3, 4, 5],
-  [6, 7, 8],
-  [0, 3, 6],
-  [1, 4, 7],
-  [2, 5, 8],
-  [0, 4, 8],
-  [2, 4, 6],
-];
+const main = () => {
+   for (let index = 0; index < 9; index++) {
+      const cell = document.createElement("span");
 
-const startGame = () => {
-  for (let index = 0; index < 9; index++) {
-    const cell = document.createElement("span");
+      cell.addEventListener("click", () => {
+         if (cell.innerHTML) return;
 
-    cell.addEventListener("click", () => {
-      if (cell.innerHTML) return;
+         currentPlayer = currentPlayer === "O" ? "X" : "O";
 
-      cell.innerHTML =
-        currentPlayer === "X" ? (currentPlayer = "O") : (currentPlayer = "X");
-      cell.setAttribute("class", currentPlayer);
-      const cellElements = gameBoard.querySelectorAll("span");
-      const winner = checkWinner(cellElements, currentPlayer);
+         cell.innerHTML = currentPlayer;
 
-      if (isDraw(cell.innerHTML) && !winner) {
-        alert("the match was a draw");
-        resetGame(cellElements);
-      }
+         const cellElements = $gameBoard.querySelectorAll("span");
+         const winner = isWinner(cellElements, currentPlayer);
 
-      if (winner) {
-        alert(`winner: ${currentPlayer}`);
-        resetGame(cellElements);
-      }
+         if (isDraw(Array.from(cellElements)) && !winner) {
+            alert("the match was a draw");
+            resetGame(cellElements);
+         }
 
-      currentPlayerMs.innerHTML = `Current Player: ${
-        currentPlayer === "X" ? "O" : "X"
-      }`;
-    });
+         if (winner) {
+            alert(`winner: ${currentPlayer}`);
+            resetGame(cellElements);
+         }
 
-    gameBoard.append(cell);
-  }
+         $currentPlayerMs.textContent = `Current Player ${
+            currentPlayer === "X" ? "O" : "X"
+         }`;
+      });
+
+      $gameBoard.append(cell);
+   }
 };
 
-startGame();
+const isWinner = (arr, currentPlayer) =>
+   winningConditions.some((combi) =>
+      combi.every((index) => arr[index].textContent === currentPlayer)
+   );
 
-const checkWinner = (arr, currentClass) =>
-  winningConditions.some((combi) =>
-    combi.every((index) => arr[index].classList.contains(currentClass))
-  );
-
-const isDraw = (item) => {
-  gameHistory.push(item);
-  const isDraw = !gameHistory.includes("") && gameHistory.length > 8;
-
-  if (isDraw) return true;
-};
+const isDraw = (cellElements) => cellElements.every(($cell) => $cell.textContent);
 
 const resetGame = (arr) => {
-  arr.forEach((item) => {
-    item.innerHTML = "";
-    item.classList.value = "";
-    currentPlayer = "O";
-
-    while (gameHistory.length) {
-      gameHistory.pop();
-    }
-  });
+   arr.forEach((item) => (item.textContent = ""));
+   currentPlayer = "O";
 };
